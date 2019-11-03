@@ -86,7 +86,7 @@ class NbaController extends AbstractController
                 FROM statistics_view sv 
                 LEFT JOIN game g ON g.team = sv.team AND g.opponent = sv.opponent AND g.date = sv.date 
                 WHERE sv.date='".$request->get('date')."' AND 
-                 (sv.reb + sv.ass + sv.ste + sv.blo + sv.poi) > 2
+                 (sv.reb + sv.ass + sv.ste + sv.blo + sv.poi) >= 2
             "
         )
             ->fetchAll();
