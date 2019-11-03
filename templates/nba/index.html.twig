@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}NBA Double - Double{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>NBA</h1>
+
+        Lütfen Tarih Girin (Gün.Ay.Yıl Örn: 19.02.2017)<br>
+        <div>
+            {{ form_start(form, {'attr': {'id': 'search_form'}}) }}
+            <div class="form-group">{{ form_widget(form.searchText) }}</div>
+            {{ form_end(form) }}
+        </div>
+        <div id="resultScreen">
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#form_search').on('click', function(){
+                $.ajax({
+                    'url': '{{ url('search_path') }}',
+                    'method': 'post',
+                    'data': {
+                        'date': $('#form_searchText').val()
+                    }
+                }).done(function(data){
+                    $('#resultScreen').html('');
+                    $.each(data.result, function(key, val){
+                        $('#resultScreen').append(
+                            '<div class="alert alert-success">' +
+                            '<h4 class="alert-heading">' + val.team_name + ' - ' + val.result.replace('W ', '').replace('L ','') + ' - ' + val.opponent_name + '</h4>' +
+                            '<p>' + val.player + '( Points: '+ val.points + ' - ' +
+                            'Rebounds: '+ val.total_rebounds + ' - ' +
+                            'Assists: '+ val.assists + ' - ' +
+                            'Steals: '+ val.steals + ' - ' +
+                            'Blocks: '+ val.blocks +
+                            ' )</p>' +
+                            '</div>'
+                        );
+                    });
+                }).fail(function(){
+                    $('#resultScreen').html('');
+                    $('#resultScreen').append('<div class="alert alert-warning">Kayıt bulunamadı.</div>');
+
+                });
+            });
+        });
+    </script>
+
+{% endblock %}

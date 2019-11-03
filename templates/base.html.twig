@@ -2,11 +2,14 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}NBA 2017 - 2018{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css')}}">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
+        <script src="{{ asset('/jquery.min.js') }}"></script>
+        <script src="{{ asset('bootstrap/js/bootstrap.min.js')}}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
